@@ -1,31 +1,20 @@
-import { usePlane } from "@react-three/cannon";
+import { RigidBody } from "@react-three/rapier";
 import { NearestFilter, RepeatWrapping } from "three";
 import { grassTexture } from "../textures";
 
 const Ground = () => {
-	const [ref] = usePlane(() => {
-		// PI = 180 degrees
-		// TODO: change to Math.PI / 2 once player get camera
-		return {
-			rotation: [-Math.PI / 4, 0, 0],
-			position: [0, 0, 0],
-		};
-	});
-
 	grassTexture.magFilter = NearestFilter;
 	grassTexture.wrapS = RepeatWrapping;
 	grassTexture.wrapT = RepeatWrapping;
-	grassTexture.repeat.set(100, 100);
+	grassTexture.repeat.set(10, 10);
 
 	return (
-		<mesh ref={ref}>
-			<planeBufferGeometry attach="geometry" args={[300, 300]} />
-			<meshStandardMaterial
-				attach="material"
-				color="white"
-				map={grassTexture}
-			/>
-		</mesh>
+		<RigidBody type="fixed" restitution={0.3}>
+			<mesh receiveShadow position={[0, -0.3, 0]}>
+				<boxBufferGeometry attach="geometry" args={[15, 0.1, 15]} />
+				<meshPhongMaterial attach="material" map={grassTexture} />
+			</mesh>
+		</RigidBody>
 	);
 };
 

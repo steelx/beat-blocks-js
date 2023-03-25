@@ -3,11 +3,9 @@ import { Canvas } from "@react-three/fiber";
 import { Debug, Physics } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
 import "./App.css";
-import Cube from "./components/Cube";
 import Environments from "./components/Environments";
-import Ground from "./components/Ground";
+import Level from "./components/Level";
 import Lights from "./components/Lights";
-import Object2 from "./components/Object2";
 const debugMode = true;
 function App() {
 	return (
@@ -31,9 +29,7 @@ function App() {
 				 */}
 				<Physics>
 					{debugMode && <Debug />}
-					<Cube />
-					<Object2 position={[5, 0, 0]} />
-					<Ground />
+					<Level />
 				</Physics>
 
 				<Environments />

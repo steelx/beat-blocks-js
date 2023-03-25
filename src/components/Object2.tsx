@@ -15,7 +15,7 @@ const Object2: React.FC<Props> = ({ position = [0, 0, 0] }) => {
 			friction={0}
 			type="kinematicPosition"
 		>
-			<mesh castShadow>
+			<mesh>
 				<boxBufferGeometry attach="geometry" args={[0.5, 0.5, 3]} />
 				<meshPhongMaterial color={0xffaaff} />
 			</mesh>

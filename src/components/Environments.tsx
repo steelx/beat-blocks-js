@@ -1,15 +1,9 @@
-import {
-	BakeShadows,
-	Environment,
-	Lightformer,
-	SoftShadows,
-} from "@react-three/drei";
+import { Environment, Lightformer } from "@react-three/drei";
 
 export default function Environments() {
 	return (
 		<>
-			<SoftShadows size={80} samples={10} />
-			<Environment resolution={256}>
+			<Environment resolution={1024}>
 				<group rotation={[-Math.PI / 4, 0, 0]}>
 					<Lightformer
 						form="ring"
@@ -41,7 +35,6 @@ export default function Environments() {
 					/>
 				</group>
 			</Environment>
-			<BakeShadows />
 		</>
 	);
 }

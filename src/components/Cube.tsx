@@ -16,7 +16,11 @@ export default function Cube() {
 
 	return (
 		<RigidBody ref={ref} colliders={false} position={[-2, 10, 0]}>
-			<mesh rotation={[-Math.PI / 4, 0, 0]} onPointerDown={handleClick}>
+			<mesh
+				rotation={[-Math.PI / 4, 0, 0]}
+				onPointerDown={handleClick}
+				castShadow
+			>
 				<boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
 				<meshPhongMaterial color={0x11ff0a} />
 				<CuboidCollider args={[0.5, 0.5, 0.5]} />

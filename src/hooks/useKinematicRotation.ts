@@ -46,3 +46,22 @@ export const useSimpleRotation = (
 		ref.current?.setNextKinematicRotation(quaternion);
 	});
 };
+
+/**
+ * useSimpleRotation: rotates in position
+ * @param ref must be from Rapier RigidBody with type="kinematicPosition"
+ * @param speed rotation speed multiplier
+ */
+export const useHorizontalSwing = (
+	ref: RefObject<RapierRigidBody>,
+	relativePosition: Position,
+	speed = 1,
+) => {
+	const [x, y, z] = relativePosition;
+	useFrame((state) => {
+		const time = state.clock.getElapsedTime();
+		const angle = time * speed;
+		const mx = Math.sin(angle) + x;
+		ref.current?.setNextKinematicTranslation({ x: mx, z, y });
+	});
+};

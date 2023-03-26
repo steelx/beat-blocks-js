@@ -1,10 +1,14 @@
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
-import { PropsWithChildren, useRef } from "react";
+import { nanoid } from "nanoid";
+import { PropsWithChildren, useMemo, useRef } from "react";
 import { ColorManagement, MeshStandardMaterial } from "three";
 import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 import { BoxGeometry } from "three/src/geometries/BoxGeometry";
 import assets from "../assets/assets";
-import { useSimpleRotation } from "../hooks/useKinematicRotation";
+import {
+	useHorizontalSwing,
+	useSimpleRotation,
+} from "../hooks/useKinematicRotation";
 import { Position, Props } from "./types";
 
 ColorManagement.legacyMode = false; // FIX for children not receiving shadows/brightness
@@ -18,6 +22,7 @@ const wallMaterial = new MeshStandardMaterial({ color: 0xa05a66 });
 interface BlockProps extends Props, PropsWithChildren {
 	material: MeshStandardMaterial;
 }
+const BLOCK_SIZE = 4;
 const Block: React.FC<BlockProps> = ({
 	position,
 	geometry = boxGeometry,
@@ -29,7 +34,7 @@ const Block: React.FC<BlockProps> = ({
 			<mesh
 				geometry={geometry}
 				position={[0, -0.1, 0]}
-				scale={[4, 0.2, 4]}
+				scale={[BLOCK_SIZE, 0.2, BLOCK_SIZE]}
 				material={material}
 				receiveShadow
 			/>
@@ -42,11 +47,11 @@ const BlockStart: React.FC = () => (
 	<Block position={[0, 0, 0]} material={floor1Material} />
 );
 
-const BlockSpinner: React.FC = () => {
+const BlockSpinner: React.FC<{ position: Position }> = ({ position }) => {
 	const obstacleRef = useRef<RapierRigidBody>(null!);
 	useSimpleRotation(obstacleRef, 2);
 	return (
-		<Block position={[0, 0, 4]} material={floor2Material}>
+		<Block position={position} material={floor2Material}>
 			<RigidBody ref={obstacleRef} type="kinematicPosition">
 				<mesh
 					geometry={boxGeometry}
@@ -59,8 +64,7 @@ const BlockSpinner: React.FC = () => {
 	);
 };
 
-const BlockSpinner2: React.FC = () => {
-	const position = [0, 0, 8] as Position;
+const BlockSpinner2: React.FC<{ position: Position }> = ({ position }) => {
 	const obstacleRef = useRef<RapierRigidBody>(null!);
 	useSimpleRotation(obstacleRef, 0.5);
 	return (
@@ -78,8 +82,25 @@ const BlockSpinner2: React.FC = () => {
 	);
 };
 
-const BlockEnd = () => {
-	const position = [0, 0, 12] as Position;
+const BlockAxe: React.FC<{ position: Position }> = ({ position }) => {
+	const obstacleRef = useRef<RapierRigidBody>(null!);
+	useHorizontalSwing(obstacleRef, position, 2);
+	return (
+		<Block position={position} material={floor2Material}>
+			<RigidBody ref={obstacleRef} type="kinematicPosition" friction={0}>
+				<mesh
+					geometry={boxGeometry}
+					material={obstacle1Material}
+					scale={[1.5, 0.1, 0.1]}
+					position={[0, 0.2, 0]}
+					castShadow
+				/>
+			</RigidBody>
+		</Block>
+	);
+};
+
+const BlockEnd: React.FC<{ position: Position }> = ({ position }) => {
 	const obstacleRef = useRef<RapierRigidBody>(null!);
 	useSimpleRotation(obstacleRef, 0.5);
 	const duck = assets.models.duck() as GLTF;
@@ -100,11 +121,25 @@ const BlockEnd = () => {
 };
 
 export default function Level() {
+	const count = 5;
+	const blockTypes = [BlockAxe, BlockSpinner, BlockSpinner2, BlockAxe];
+
+	const blocks = useMemo(() => {
+		const stack = [];
+		for (let i = 0; i < count; i++) {
+			const type = blockTypes[Math.floor(Math.random() * blockTypes.length)];
+			stack.push(type);
+		}
+
+		return stack;
+	}, [count, blockTypes]);
+
 	return (
 		<>
-			<BlockEnd />
-			<BlockSpinner2 />
-			<BlockSpinner />
+			<BlockEnd position={[0, 0.1, (blocks.length + 1) * BLOCK_SIZE]} />
+			{blocks.map((BlockType, i) => (
+				<BlockType key={nanoid()} position={[0, 0, (i + 1) * BLOCK_SIZE]} />
+			))}
 			<BlockStart />
 		</>
 	);

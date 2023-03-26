@@ -4,7 +4,6 @@ import { Debug, Physics } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
 import { Suspense } from "react";
 import "./App.css";
-import Environments from "./components/Environments";
 import Level from "./components/Level";
 import Lights from "./components/Lights";
 const debugMode = true;
@@ -12,6 +11,7 @@ function App() {
 	return (
 		<>
 			<Canvas
+				legacy={false}
 				shadows
 				camera={{
 					position: [10, 10, -10],
@@ -34,8 +34,6 @@ function App() {
 					</Physics>
 					<Preload all />
 				</Suspense>
-
-				<Environments />
 
 				{debugMode && <Perf />}
 				{debugMode && <axesHelper args={[1]} />}

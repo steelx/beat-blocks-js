@@ -1,7 +1,7 @@
 import { useLoader } from "@react-three/fiber";
-
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
+import duckModel from "./Duck.glb";
 import grass from "./grassp.jpg";
 import psyduckModel from "./psyduck.glb";
 
@@ -22,6 +22,7 @@ const assets = {
 	},
 	models: {
 		psyduck: () => preloadAssetsAndGet(psyduckModel),
+		duck: () => preloadAssetsAndGet(duckModel),
 	},
 };
 

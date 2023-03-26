@@ -1,16 +1,11 @@
-import assets from "../assets/assets";
-import { useSimpleRotation } from "../hooks/useKinematicRotation";
-import { Position, Props } from "./types";
-// import psyduck from "../assets/psyduck.glb";
-import {
-	CuboidCollider,
-	RapierRigidBody,
-	RigidBody,
-} from "@react-three/rapier";
+import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { PropsWithChildren, useRef } from "react";
 import { ColorManagement, MeshStandardMaterial } from "three";
 import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 import { BoxGeometry } from "three/src/geometries/BoxGeometry";
+import assets from "../assets/assets";
+import { useSimpleRotation } from "../hooks/useKinematicRotation";
+import { Position, Props } from "./types";
 
 ColorManagement.legacyMode = false; // FIX for children not receiving shadows/brightness
 const boxGeometry = new BoxGeometry(1, 1, 1);
@@ -87,20 +82,18 @@ const BlockEnd = () => {
 	const position = [0, 0, 12] as Position;
 	const obstacleRef = useRef<RapierRigidBody>(null!);
 	useSimpleRotation(obstacleRef, 0.5);
-	const psyduck = assets.models.psyduck() as GLTF;
-	// psyduck.scene.children.forEach((mesh) => (mesh.castShadow = true));
+	const duck = assets.models.duck() as GLTF;
+	duck.scene.children.forEach((mesh) => (mesh.castShadow = true));
 
 	return (
 		<Block position={position} material={floor0Material}>
 			<RigidBody
 				type="fixed"
-				position={[0.5, 0, 2]}
-				rotation={[0, Math.PI / 1, 0]}
-				colliders={false}
+				position={[0, 0, 0]}
+				rotation={[0, 0, 0]}
 				restitution={0.3}
 			>
-				<primitive object={psyduck.scene} scale={0.025} />
-				<CuboidCollider args={[0.5, 0.5, 0.5]} position={[0.5, 0.5, 2]} />
+				<primitive object={duck.scene} scale={0.5} />
 			</RigidBody>
 		</Block>
 	);

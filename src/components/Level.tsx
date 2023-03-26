@@ -2,7 +2,11 @@ import assets from "../assets/assets";
 import { useSimpleRotation } from "../hooks/useKinematicRotation";
 import { Position, Props } from "./types";
 // import psyduck from "../assets/psyduck.glb";
-import { RapierRigidBody, RigidBody } from "@react-three/rapier";
+import {
+	CuboidCollider,
+	RapierRigidBody,
+	RigidBody,
+} from "@react-three/rapier";
 import { PropsWithChildren, useRef } from "react";
 import { ColorManagement, MeshStandardMaterial } from "three";
 import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
@@ -70,7 +74,8 @@ const BlockSpinner2: React.FC = () => {
 				<mesh
 					geometry={boxGeometry}
 					material={obstacle1Material}
-					scale={[1.5, 0.2, 0.1]}
+					scale={[1.5, 0.1, 0.1]}
+					position={[0, 0.2, 0]}
 					castShadow
 				/>
 			</RigidBody>
@@ -82,16 +87,20 @@ const BlockEnd = () => {
 	const position = [0, 0, 12] as Position;
 	const obstacleRef = useRef<RapierRigidBody>(null!);
 	useSimpleRotation(obstacleRef, 0.5);
-	const psyduck = assets.models.psyduck();
+	const psyduck = assets.models.psyduck() as GLTF;
+	// psyduck.scene.children.forEach((mesh) => (mesh.castShadow = true));
 
 	return (
 		<Block position={position} material={floor0Material}>
-			<RigidBody type="fixed">
-				<primitive
-					object={(psyduck as GLTF).scene}
-					scale={0.025}
-					position={[0, 0, 0]}
-				/>
+			<RigidBody
+				type="fixed"
+				position={[0.5, 0, 2]}
+				rotation={[0, Math.PI / 1, 0]}
+				colliders={false}
+				restitution={0.3}
+			>
+				<primitive object={psyduck.scene} scale={0.025} />
+				<CuboidCollider args={[0.5, 0.5, 0.5]} position={[0.5, 0.5, 2]} />
 			</RigidBody>
 		</Block>
 	);

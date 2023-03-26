@@ -1,7 +1,8 @@
-import { OrbitControls, Sky } from "@react-three/drei";
+import { OrbitControls, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Debug, Physics } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
+import { Suspense } from "react";
 import "./App.css";
 import Environments from "./components/Environments";
 import Level from "./components/Level";
@@ -20,21 +21,24 @@ function App() {
 					zoom: 1,
 				}}
 			>
-				<Sky sunPosition={[100, 100, 20]} />
-				{/* <color attach="background" args={["#202025"]} /> */}
+				<color attach="background" args={["#202025"]} />
 				<Lights />
 
 				{/**
 				 * Game objects
 				 */}
-				<Physics>
-					{debugMode && <Debug />}
-					<Level />
-				</Physics>
+				<Suspense fallback={null}>
+					<Physics>
+						{debugMode && <Debug />}
+						<Level />
+					</Physics>
+					<Preload all />
+				</Suspense>
 
 				<Environments />
 
 				{debugMode && <Perf />}
+				{debugMode && <axesHelper args={[1]} />}
 				{debugMode && <OrbitControls makeDefault />}
 			</Canvas>
 		</>

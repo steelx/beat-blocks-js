@@ -1,3 +1,6 @@
+import type { BufferGeometry } from "three";
+export type Position = [number, number, number];
 export interface Props {
-	position?: [number, number, number];
+	position?: Position;
+	geometry?: BufferGeometry;
 }

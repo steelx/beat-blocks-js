@@ -1,8 +1,9 @@
 import { RigidBody } from "@react-three/rapier";
 import { NearestFilter, RepeatWrapping } from "three";
-import { grassTexture } from "../textures";
+import assets from "../assets/assets";
 
 const Ground = () => {
+	const grassTexture = assets.textures.grass();
 	grassTexture.magFilter = NearestFilter;
 	grassTexture.wrapS = RepeatWrapping;
 	grassTexture.wrapT = RepeatWrapping;

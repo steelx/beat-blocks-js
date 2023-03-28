@@ -1,4 +1,4 @@
-import { OrbitControls, Preload } from "@react-three/drei";
+import { KeyboardControls, OrbitControls, Preload } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Debug, Physics } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
@@ -6,10 +6,17 @@ import { Suspense } from "react";
 import "./App.css";
 import Level from "./components/Level";
 import Lights from "./components/Lights";
+import Player from "./components/Player";
 const debugMode = true;
 function App() {
 	return (
-		<>
+		<KeyboardControls map={[
+			{ keys: ["w", "ArrowUp"], name: "moveForward" },
+			{ keys: ["s", "ArrowDown"], name: "moveBackward" },
+			{ keys: ["a", "ArrowLeft"], name: "moveLeft" },
+			{ keys: ["d", "ArrowRight"], name: "moveRight" },
+			{ keys: ["Space"], name: "jump" }
+		]}>
 			<Canvas
 				legacy={false}
 				shadows
@@ -30,6 +37,7 @@ function App() {
 				<Suspense fallback={null}>
 					<Physics>
 						{debugMode && <Debug />}
+						<Player />
 						<Level />
 					</Physics>
 					<Preload all />
@@ -39,7 +47,7 @@ function App() {
 				{debugMode && <axesHelper args={[1]} />}
 				{debugMode && <OrbitControls makeDefault />}
 			</Canvas>
-		</>
+		</KeyboardControls>
 	);
 }
 

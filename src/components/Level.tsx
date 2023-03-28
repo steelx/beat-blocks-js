@@ -30,16 +30,18 @@ const Block: React.FC<BlockProps> = ({
 	children = null,
 }) => {
 	return (
-		<group position={position}>
-			<mesh
-				geometry={geometry}
-				position={[0, -0.1, 0]}
-				scale={[BLOCK_SIZE, 0.2, BLOCK_SIZE]}
-				material={material}
-				receiveShadow
-			/>
-			{children}
-		</group>
+		<RigidBody type="fixed" restitution={1}>
+			<group position={position}>
+				<mesh
+					geometry={geometry}
+					position={[0, -0.1, 0]}
+					scale={[BLOCK_SIZE, 0.2, BLOCK_SIZE]}
+					material={material}
+					receiveShadow
+				/>
+				{children}
+			</group>
+		</RigidBody>
 	);
 };
 
@@ -91,7 +93,7 @@ const BlockAxe: React.FC<{ position: Position }> = ({ position }) => {
 				<mesh
 					geometry={boxGeometry}
 					material={obstacle1Material}
-					scale={[1.5, 0.1, 0.1]}
+					scale={[1.5, 0.2, 0.5]}
 					position={[0, 0.2, 0]}
 					castShadow
 				/>

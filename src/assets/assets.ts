@@ -2,7 +2,7 @@ import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import duckModel from "./Duck.glb";
-import grass from "./grassp.jpg";
+import grass from "./grass.png";
 import psyduckModel from "./psyduck.glb";
 
 // rome-ignore lint/suspicious/noExplicitAny: <explanation>

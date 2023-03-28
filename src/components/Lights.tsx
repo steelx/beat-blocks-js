@@ -4,9 +4,9 @@ export default function Lights() {
 			<directionalLight
 				intensity={1}
 				position={[10, 10, 1]}
-				shadow-mapSize={[1024, 1024]}
-				shadow-camera-near={1}
-				shadow-camera-far={10}
+				shadow-mapSize={[512, 512]}
+				shadow-camera-near={0.5}
+				shadow-camera-far={300}
 				shadow-camera-top={10}
 				shadow-camera-right={10}
 				shadow-camera-bottom={-10}
@@ -15,7 +15,7 @@ export default function Lights() {
 			>
 				<orthographicCamera
 					attach="shadow-camera"
-					args={[-5, 5, 5, -5, 1, 100]}
+					args={[-5, 5, 5, -5, 0.5, 300]}
 				/>
 			</directionalLight>
 			<hemisphereLight intensity={0.225} />

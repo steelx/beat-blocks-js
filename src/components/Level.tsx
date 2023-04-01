@@ -7,7 +7,7 @@ import { BoxGeometry } from "three/src/geometries/BoxGeometry";
 import assets from "../assets/assets";
 import {
 	useHorizontalSwing,
-	useSimpleRotation,
+	useSimpleRotation
 } from "../hooks/useKinematicRotation";
 import { Position, Props } from "./types";
 
@@ -41,7 +41,7 @@ const Block: React.FC<BlockProps> = ({
 				/>
 				{children}
 			</group>
-		</RigidBody>
+		</RigidBody >
 	);
 };
 

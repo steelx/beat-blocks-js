@@ -1,4 +1,4 @@
-import { KeyboardControls, OrbitControls, Preload } from "@react-three/drei";
+import { KeyboardControls, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Debug, Physics } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
@@ -40,7 +40,6 @@ function App() {
 						<Player />
 						<Level />
 					</Physics>
-					<Preload all />
 				</Suspense>
 
 				{debugMode && <Perf />}

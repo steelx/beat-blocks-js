@@ -11,6 +11,7 @@ import { Position } from "../components/types";
  * @param relativePosition position relative to the center of the object/parent
  */
 export const useKinematicRotation = (ref: RefObject<RapierRigidBody>, relativePosition: Position) => {
+	const [x, y, z] = relativePosition;
 	useFrame((state) => {
 		const time = state.clock.getElapsedTime();
 		const rotation = new Quaternion();
@@ -19,9 +20,9 @@ export const useKinematicRotation = (ref: RefObject<RapierRigidBody>, relativePo
 
 		// change position
 		const angle = time * 1.2;
-		const x = Math.cos(angle) + relativePosition[0];
-		const z = Math.sin(angle) + relativePosition[2];
-		ref.current?.setNextKinematicTranslation({ x, z, y: relativePosition[1] });
+		const mx = Math.cos(angle) + x;
+		const mz = Math.sin(angle) + z;
+		ref.current?.setNextKinematicTranslation({ x: mx, z: mz, y });
 	});
 };
 

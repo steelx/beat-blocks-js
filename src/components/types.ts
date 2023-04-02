@@ -1,6 +1,6 @@
+import type { Triplet } from "@react-three/cannon";
 import type { BufferGeometry } from "three";
-export type Position = [number, number, number];
 export interface Props {
-	position?: Position;
+	position?: Triplet;
 	geometry?: BufferGeometry;
 }

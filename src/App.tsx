@@ -1,6 +1,6 @@
-import { KeyboardControls, OrbitControls, Preload } from "@react-three/drei";
+import { Physics } from "@react-three/cannon";
+import { KeyboardControls, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Debug, Physics } from "@react-three/rapier";
 import { Perf } from "r3f-perf";
 import { Suspense } from "react";
 import "./App.css";
@@ -36,11 +36,10 @@ function App() {
 				 */}
 				<Suspense fallback={null}>
 					<Physics>
-						{debugMode && <Debug />}
+						{/* <Debug color="hotpink" scale={1.01}> */}
 						<Player />
 						<Level />
 					</Physics>
-					<Preload all />
 				</Suspense>
 
 				{debugMode && <Perf />}

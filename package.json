@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@react-spring/three": "^9.7.1",
+    "@react-three/cannon": "^6.5.2",
     "@react-three/drei": "^9.58.1",
     "@react-three/fiber": "^8.12.0",
-    "@react-three/rapier": "^0.14.0",
     "nanoid": "^4.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -21,6 +21,7 @@
     "zustand": "^4.3.6"
   },
   "devDependencies": {
+    "@types/cannon": "^0.1.8",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/three": "^0.149.0",

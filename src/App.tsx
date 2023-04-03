@@ -7,7 +7,7 @@ import "./App.css";
 import Level from "./components/Level";
 import Lights from "./components/Lights";
 import Player from "./components/Player";
-const debugMode = true;
+const debugMode = false;
 function App() {
 	return (
 		<KeyboardControls map={[

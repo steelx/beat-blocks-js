@@ -8,7 +8,7 @@ type SphereProps = {
 }
 
 export function MovingSphere({ radius, position }: SphereProps) {
-    const [ref, api] = useSphere<Mesh>(() => ({ args: [radius], position, type: 'Static' }))
+    const [ref, api] = useSphere<Mesh>(() => ({ args: [radius], position, type: 'Kinematic' }))
     useFrame(({ clock: { elapsedTime } }) => {
         api.position.set(position[0], position[1], Math.sin(elapsedTime / 3) * 2)
     })
@@ -26,7 +26,7 @@ type CubeProps = {
 }
 
 export function MovingCube({ size, position }: CubeProps) {
-    const [ref, api] = useBox<Mesh>(() => ({ args: size, position, type: 'Static' }))
+    const [ref, api] = useBox<Mesh>(() => ({ args: size, position, type: 'Kinematic' }))
     useFrame(({ clock: { elapsedTime } }) => {
         api.position.set(Math.sin(elapsedTime / 2) * 2, position[1], position[2])
     })
